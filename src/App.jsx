@@ -214,14 +214,14 @@ function PageHero({ image, title, subtitle }) {
   return (
     <div style={{ position: "relative", minHeight: 240, overflow: "hidden" }}>
       {showImg ? (
-        <img src={image} alt="" onError={() => setImgError(true)} loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.7)" }} />
+        <img src={image} alt="" onError={() => setImgError(true)} loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.85)" }} />
       ) : (
-        <div style={{ position: "absolute", inset: 0, background: typeof image === "string" ? image : GRADIENTS.home, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.7)" }} />
+        <div style={{ position: "absolute", inset: 0, background: typeof image === "string" ? image : GRADIENTS.home, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.85)" }} />
       )}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.45) 0%, rgba(0,0,0,.05) 50%, rgba(0,0,0,.15) 100%)" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.32) 0%, rgba(0,0,0,.03) 50%, rgba(0,0,0,.10) 100%)" }} />
       <div style={{ position: "relative", padding: "80px 20px 24px", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 240 }}>
         <h1 style={{ fontFamily: "'Vollkorn', serif", fontSize: 34, fontWeight: 600, color: "#fff", margin: 0, lineHeight: 1.1 }}>{title}</h1>
-        {subtitle && <p style={{ fontSize: 13, color: "rgba(255,255,255,.75)", margin: "6px 0 0", maxWidth: 280 }}>{subtitle}</p>}
+        {subtitle && <p style={{ fontSize: 13, color: "rgba(255,255,255,.85)", margin: "6px 0 0", maxWidth: 340 }}>{subtitle}</p>}
       </div>
     </div>
   );
