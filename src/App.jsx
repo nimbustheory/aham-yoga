@@ -207,19 +207,19 @@ const ADMIN_CHARTS = {
 
 const AppContext = createContext(null);
 
-function PageHero({ image, title, subtitle }) {
+function PageHero({ image, title, subtitle, minHeight = 240 }) {
   const [imgError, setImgError] = useState(false);
   const isUrl = typeof image === "string" && image.startsWith("http");
   const showImg = isUrl && !imgError;
   return (
-    <div style={{ position: "relative", minHeight: 240, overflow: "hidden" }}>
+    <div style={{ position: "relative", minHeight, overflow: "hidden", marginBottom: 16 }}>
       {showImg ? (
-        <img src={image} alt="" onError={() => setImgError(true)} loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.85)" }} />
+        <img src={image} alt="" onError={() => setImgError(true)} loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.75)" }} />
       ) : (
-        <div style={{ position: "absolute", inset: 0, background: typeof image === "string" ? image : GRADIENTS.home, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.85)" }} />
+        <div style={{ position: "absolute", inset: 0, background: typeof image === "string" ? image : GRADIENTS.home, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.75)" }} />
       )}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.32) 0%, rgba(0,0,0,.03) 50%, rgba(0,0,0,.10) 100%)" }} />
-      <div style={{ position: "relative", padding: "80px 20px 24px", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 240 }}>
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.35) 0%, rgba(0,0,0,.04) 50%, rgba(0,0,0,.12) 100%)" }} />
+      <div style={{ position: "relative", padding: "80px 20px 24px", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight }}>
         <h1 style={{ fontFamily: "'Vollkorn', serif", fontSize: 34, fontWeight: 600, color: "#fff", margin: 0, lineHeight: 1.1 }}>{title}</h1>
         {subtitle && <p style={{ fontSize: 13, color: "rgba(255,255,255,.85)", margin: "6px 0 0", maxWidth: 340 }}>{subtitle}</p>}
       </div>
@@ -354,7 +354,7 @@ function HomePage() {
 
   return (
     <div>
-      <PageHero image={STUDIO_IMAGES.home || GRADIENTS.home} title={<>{STUDIO_CONFIG.heroLine1}<br/><span style={{ color: T.accent, fontStyle: "italic" }}>{STUDIO_CONFIG.heroLine2}</span></>} subtitle={STUDIO_CONFIG.description} />
+      <PageHero image={STUDIO_IMAGES.home || GRADIENTS.home} title={<>{STUDIO_CONFIG.heroLine1}<br/><span style={{ color: T.accent, fontStyle: "italic" }}>{STUDIO_CONFIG.heroLine2}</span></>} subtitle={STUDIO_CONFIG.description} minHeight={300} />
 
       <section style={{ padding: "20px 16px 0", position: "relative", zIndex: 10 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
@@ -1018,7 +1018,7 @@ function SettingsModal({ onClose }) {
         <div style={{ padding: "14px 0" }}>
           <h3 style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: T.textMuted, margin: "0 0 10px" }}>About</h3>
           <p style={{ fontSize: 13, color: T.textMuted, margin: 0 }}>{STUDIO_CONFIG.name} App v1.0</p>
-          <p style={{ fontSize: 12, color: T.textFaint, margin: "4px 0 0" }}>Built by Lumi — LumiClass.App</p>
+          <p style={{ fontSize: 12, color: T.textFaint, margin: "4px 0 0" }}>Built by LUMI — LumiClass.app</p>
         </div>
         <button style={{ width: "100%", padding: "12px 0", borderRadius: 8, border: `1px solid ${T.border}`, background: "transparent", color: T.accent, fontWeight: 700, fontSize: 14, cursor: "pointer", marginTop: 8 }}>Sign Out</button>
       </div>
@@ -1136,13 +1136,12 @@ export default function App({ onAdminToggle }) {
 
   const mainTabs = [
     { id: "home", label: "Home", icon: Home },
-    { id: "classes", label: "Classes", icon: Wind },
     { id: "schedule", label: "Schedule", icon: Calendar },
     { id: "practice", label: "Practice", icon: TrendingUp },
+    { id: "community", label: "Community", icon: Heart },
     { id: "more", label: "More", icon: Menu },
   ];
   const moreItems = [
-    { id: "community", label: "Community", icon: Heart },
     { id: "teachers", label: "Teachers", icon: Users },
     { id: "membership", label: "Membership", icon: CreditCard },
     { id: "events", label: "Events", icon: CalendarDays },
@@ -1167,7 +1166,7 @@ export default function App({ onAdminToggle }) {
 
   return (
     <AppContext.Provider value={{ page, setPage, classRegistrations, registerForClass, openReservation, feedCelebrations, celebrateFeed }}>
-      <div style={{ width: 390, height: 844, position: "relative", overflow: "hidden", borderRadius: 40, background: "white" }}>
+      <div style={{ width: 390, height: 720, position: "relative", overflow: "hidden", borderRadius: 40, background: "white" }}>
         <header style={{ position: "absolute", top: 0, left: 0, right: 0, background: T.bg, color: "#fff", padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between", zIndex: 30 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{ width: 34, height: 34, borderRadius: 8, background: T.accent, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Vollkorn', serif", fontSize: 14, color: "#fff", fontWeight: 700 }}>{STUDIO_CONFIG.logoMark}</div>
@@ -1183,7 +1182,7 @@ export default function App({ onAdminToggle }) {
           </div>
         </header>
 
-        <div ref={contentRef} style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 64, overflowY: "auto", overflowX: "hidden", scrollbarWidth: "none", msOverflowStyle: "none", background: T.bgDim }}>
+        <div ref={contentRef} style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 60, overflowY: "auto", overflowX: "hidden", scrollbarWidth: "none", msOverflowStyle: "none", background: T.bgDim }}>
           <div style={{ paddingTop: 54 }}>{renderPage()}</div>
           <style>{`div::-webkit-scrollbar { display: none; }`}</style>
         </div>
@@ -1202,7 +1201,7 @@ export default function App({ onAdminToggle }) {
           </div>
         )}
 
-        <nav style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 64, background: "white", borderTop: "1px solid #eee", display: "flex", alignItems: "center", justifyContent: "space-around", zIndex: 50 }}>
+        <nav style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, background: "white", borderTop: "1px solid #eee", display: "flex", alignItems: "center", justifyContent: "space-around", zIndex: 50 }}>
           {mainTabs.map(tab => {
             const active = tab.id === "more" ? (isMoreActive || showMore) : page === tab.id;
             return (

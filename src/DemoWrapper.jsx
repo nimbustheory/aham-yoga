@@ -62,7 +62,7 @@ export default function DemoWrapper() {
         {/* Footer */}
         <div style={{ padding: "16px 24px 20px", borderTop: "1px solid #e5e7eb" }}>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#9ca3af", textAlign: "center" }}>
-            Built by <span style={{ color: accent }}>LUMI</span> — LumiClass.App
+            Built by <span style={{ color: accent }}>LUMI</span> — LumiClass.app
           </div>
         </div>
         <style>{`aside::-webkit-scrollbar { display: none; }`}</style>
